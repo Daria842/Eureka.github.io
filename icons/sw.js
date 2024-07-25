@@ -5,23 +5,20 @@ const assetUrls = [
   '/css/styles.css',
   '/background',
   '/index.html',
-];
+]
 
 self.addEventListener('install', async event => {
-  event.waitUntil(
-    caches.open(staticCacheName)
-      .then(cache => cache.addAll(assetUrls))
-  );
-});
-
+    const cache = await caches.open(staticCacheName)
+    await cache.addAll(asseturls)
+})
 self.addEventListener('activate', event => {
   console.log('[SW]: activate');
-});
+})
 
 self.addEventListener('fetch', event => {
   console.log('Fetch', event.request.url);
   event.respondWith(cacheFirst(event.request));
-});
+})
 
 async function cacheFirst(request) {
   const cached = await cache.match(request);
